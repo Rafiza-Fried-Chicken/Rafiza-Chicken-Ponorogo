@@ -1,0 +1,252 @@
+// FILE: dashboard/index.html
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-i18n="title">Crispy Crown Fried Chicken - Home</title>
+  <meta name="description" content="Official website of Crispy Crown Fried Chicken - premium fried chicken brand." />
+  <meta property="og:title" content="Crispy Crown Fried Chicken - Home" />
+  <meta property="og:description" content="Official website of Crispy Crown Fried Chicken - premium fried chicken brand." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1606756790138-8c3e3c8f1f5b" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins&display=swap');
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin:0; font-family: 'Inter', sans-serif; background:#F7F7F7; color:#111;
+      line-height:1.5;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+    a {
+      color:#D12D2D;
+      text-decoration:none;
+    }
+    a:hover, a:focus {
+      text-decoration:underline;
+      outline:none;
+    }
+    header, footer {
+      background:#fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 0.75rem 1rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      position: sticky;
+      top:0;
+      z-index: 1000;
+    }
+    .logo img {
+      height:40px;
+      width:auto;
+      display:block;
+    }
+    nav {
+      display:flex;
+      align-items:center;
+      gap:1rem;
+    }
+    nav a {
+      font-weight:600;
+      font-size: 1rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+    nav a:hover, nav a:focus {
+      background: #F5BE3D;
+      color:#111;
+      outline:none;
+    }
+    .lang-toggle {
+      cursor:pointer;
+      font-weight:600;
+      user-select:none;
+      display:flex;
+      gap:0.5rem;
+      font-size: 0.9rem;
+    }
+    .lang-toggle span {
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+    .lang-toggle span.active {
+      background: #D12D2D;
+      color: #fff;
+      border-color: #D12D2D;
+    }
+    main {
+      flex:1;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display:flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .hero {
+      position: relative;
+      background: url('https://images.unsplash.com/photo-1606756790138-8c3e3c8f1f5b?w=1200&auto=format&fit=crop') center/cover no-repeat;
+      height: 320px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(209,45,45,0.3);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      text-align:center;
+      padding: 0 1rem;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(209,45,45,0.6);
+      border-radius: 12px;
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+    }
+    .hero-content h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    }
+    .btn-primary {
+      background: #D12D2D;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(209,45,45,0.5);
+      transition: background-color 0.3s ease;
+      user-select:none;
+    }
+    .btn-primary:hover, .btn-primary:focus {
+      background: #a02121;
+      outline:none;
+    }
+    .usp {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .usp-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      padding: 1.5rem 2rem;
+      flex: 1 1 220px;
+      max-width: 280px;
+      text-align: center;
+      color: #444;
+      font-weight: 600;
+      font-size: 1rem;
+      user-select:none;
+    }
+    footer {
+      font-size: 0.9rem;
+      color: #444;
+      text-align: center;
+      padding: 1rem;
+      background: #fff;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      .hero-content h1 {
+        font-size: 1.8rem;
+      }
+      .hero-content p {
+        font-size: 1rem;
+      }
+      nav {
+        display:none;
+      }
+      header {
+        justify-content: space-between;
+      }
+      .burger {
+        display: block;
+        cursor: pointer;
+        width: 28px;
+        height: 22px;
+        position: relative;
+      }
+      .burger span {
+        position: absolute;
+        height: 3px;
+        width: 100%;
+        background: #D12D2D;
+        border-radius: 3px;
+        transition: 0.3s ease;
+      }
+      .burger span:nth-child(1) {
+        top: 0;
+      }
+      .burger span:nth-child(2) {
+        top: 9px;
+      }
+      .burger span:nth-child(3) {
+        bottom: 0;
+      }
+      .nav-mobile {
+        position: fixed;
+        top: 56px;
+        right: 0;
+        background: #fff;
+        width: 200px;
+        box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+        border-radius: 0 0 0 12px;
+        display: none;
+        flex-direction: column;
+        padding: 1rem;
+        z-index: 1100;
+      }
+      .nav-mobile a {
+        padding: 0.5rem 0;
+        font-weight: 600;
+        color: #D12D2D;
+      }
+      .nav-mobile a:hover, .nav-mobile a:focus {
+        background: #F5BE3D;
+        color: #111;
+        outline:none;
+      }
+      .nav-mobile.show {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/dashboard/index.html" class="logo" aria-label="Crispy Crown Fried Chicken Home">
+      <img src="https://images.unsplash.com/photo-1604908177522-bb4a0c78c6f1f" alt="Crispy Crown Fried Chicken Logo" />
+    </a>
+    <nav role="navigation" aria-label="Primary Navigation">
+      <a href="/dashboard/index.html" data-i18n="nav.home">Home</a>
+      <a href="/dashboard/menu.html" data-i18n="nav.menu">Menu</a>
+      <a href="/dashboard/locations.html" data-i18n="nav.locations">Locations</a>
+      <a href
