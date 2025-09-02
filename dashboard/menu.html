@@ -95,6 +95,7 @@
       gap: 1rem;
       flex-wrap: wrap;
       justify-content: center;
+      user-select:none;
     }
     .filter button {
       background: #fff;
@@ -105,7 +106,6 @@
       border-radius: 30px;
       cursor: pointer;
       transition: background-color 0.3s ease, color 0.3s ease;
-      user-select:none;
     }
     .filter button.active, .filter button:hover, .filter button:focus {
       background: #D12D2D;
@@ -124,7 +124,6 @@
       padding: 1rem;
       display: flex;
       flex-direction: column;
-      user-select:none;
     }
     .card img {
       width: 100%;
@@ -139,18 +138,21 @@
       font-weight: 700;
       font-size: 1.2rem;
       color: #D12D2D;
+      user-select:none;
     }
     .card .desc {
       flex-grow: 1;
       color: #444;
       font-size: 0.95rem;
       margin-bottom: 0.5rem;
+      user-select:none;
     }
     .price {
       font-weight: 700;
       font-size: 1rem;
       color: #111;
       margin-bottom: 0.5rem;
+      user-select:none;
     }
     .price span {
       font-weight: 400;
@@ -162,6 +164,18 @@
       font-size: 0.85rem;
       color: #999;
       margin-bottom: 0.5rem;
+      user-select:none;
+    }
+    .halal-badge {
+      display: inline-block;
+      background: #F5BE3D;
+      color: #111;
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 12px;
+      margin-bottom: 0.5rem;
+      user-select:none;
     }
     .btn-add {
       background: #D12D2D;
@@ -186,6 +200,7 @@
       padding: 1rem;
       background: #fff;
       box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
+      user-select:none;
     }
     /* Responsive */
     @media (max-width: 600px) {
@@ -287,7 +302,6 @@
     &copy; 2024 Crispy Crown Fried Chicken
   </footer>
   <script>
-    // Translations
     const translations = {
       en: {
         title: "Menu - Crispy Crown Fried Chicken",
@@ -319,7 +333,6 @@
       }
     };
 
-    // Menu data
     const menuItems = [
       {
         id: "royal-bucket",
@@ -363,7 +376,6 @@
       }
     ];
 
-    // Format currency
     function formatIDR(num) {
       return 'Rp' + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     }
@@ -371,7 +383,6 @@
       return '$' + num.toFixed(2);
     }
 
-    // Toast notification
     function showToast(message) {
       let toast = document.createElement('div');
       toast.textContent = message;
@@ -396,7 +407,6 @@
       }, 2000);
     }
 
-    // Language toggle
     const langIdBtn = document.getElementById('lang-id');
     const langEnBtn = document.getElementById('lang-en');
     let currentLang = 'id';
@@ -405,10 +415,8 @@
       if (!translations[lang]) return;
       currentLang = lang;
       localStorage.lang = lang;
-      // Update active toggle
       langIdBtn.classList.toggle('active', lang === 'id');
       langEnBtn.classList.toggle('active', lang === 'en');
-      // Update all data-i18n
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         const keys = key.split('.');
@@ -429,7 +437,6 @@
       updateLoginAccountLink();
     }
 
-    // Detect default language
     (function detectLang() {
       const stored = localStorage.lang;
       if (stored && (stored === 'id' || stored === 'en')) {
@@ -454,13 +461,4 @@
     // Populate mobile nav links
     function populateMobileNav() {
       const navLinks = document.querySelectorAll('nav a');
-      navMobile.innerHTML = '';
-      navLinks.forEach(link => {
-        const clone = link.cloneNode(true);
-        clone.addEventListener('click', () => navMobile.classList.remove('show'));
-        navMobile.appendChild(clone);
-      });
-    }
-    populateMobileNav();
-
-    //
+      nav
