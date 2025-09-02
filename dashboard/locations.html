@@ -1,0 +1,335 @@
+// FILE: dashboard/locations.html
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-i18n="title">Locations - Crispy Crown Fried Chicken</title>
+  <meta name="description" content="Find Crispy Crown Fried Chicken locations near you." />
+  <meta property="og:title" content="Locations - Crispy Crown Fried Chicken" />
+  <meta property="og:description" content="Find Crispy Crown Fried Chicken locations near you." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1606756790138-8c3e3c8f1f5b" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter&family=Poppins&display=swap');
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin:0; font-family: 'Inter', sans-serif; background:#F7F7F7; color:#111;
+      line-height:1.5;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+    a {
+      color:#D12D2D;
+      text-decoration:none;
+    }
+    a:hover, a:focus {
+      text-decoration:underline;
+      outline:none;
+    }
+    header, footer {
+      background:#fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 0.75rem 1rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      position: sticky;
+      top:0;
+      z-index: 1000;
+    }
+    .logo img {
+      height:40px;
+      width:auto;
+      display:block;
+    }
+    nav {
+      display:flex;
+      align-items:center;
+      gap:1rem;
+    }
+    nav a {
+      font-weight:600;
+      font-size: 1rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+    nav a:hover, nav a:focus {
+      background: #F5BE3D;
+      color:#111;
+      outline:none;
+    }
+    .lang-toggle {
+      cursor:pointer;
+      font-weight:600;
+      user-select:none;
+      display:flex;
+      gap:0.5rem;
+      font-size: 0.9rem;
+    }
+    .lang-toggle span {
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      border: 1px solid transparent;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+    .lang-toggle span.active {
+      background: #D12D2D;
+      color: #fff;
+      border-color: #D12D2D;
+    }
+    main {
+      flex:1;
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display:flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 2rem;
+      color: #D12D2D;
+      user-select:none;
+    }
+    .location-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      color: #444;
+      font-size: 1rem;
+    }
+    .location-list li {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
+      user-select:none;
+    }
+    footer {
+      font-size: 0.9rem;
+      color: #444;
+      text-align: center;
+      padding: 1rem;
+      background: #fff;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      nav {
+        display:none;
+      }
+      header {
+        justify-content: space-between;
+      }
+      .burger {
+        display: block;
+        cursor: pointer;
+        width: 28px;
+        height: 22px;
+        position: relative;
+      }
+      .burger span {
+        position: absolute;
+        height: 3px;
+        width: 100%;
+        background: #D12D2D;
+        border-radius: 3px;
+        transition: 0.3s ease;
+      }
+      .burger span:nth-child(1) {
+        top: 0;
+      }
+      .burger span:nth-child(2) {
+        top: 9px;
+      }
+      .burger span:nth-child(3) {
+        bottom: 0;
+      }
+      .nav-mobile {
+        position: fixed;
+        top: 56px;
+        right: 0;
+        background: #fff;
+        width: 200px;
+        box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+        border-radius: 0 0 0 12px;
+        display: none;
+        flex-direction: column;
+        padding: 1rem;
+        z-index: 1100;
+      }
+      .nav-mobile a {
+        padding: 0.5rem 0;
+        font-weight: 600;
+        color: #D12D2D;
+      }
+      .nav-mobile a:hover, .nav-mobile a:focus {
+        background: #F5BE3D;
+        color: #111;
+        outline:none;
+      }
+      .nav-mobile.show {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/dashboard/index.html" class="logo" aria-label="Crispy Crown Fried Chicken Home">
+      <img src="https://images.unsplash.com/photo-1604908177522-bb4a0c78c6f1f" alt="Crispy Crown Fried Chicken Logo" />
+    </a>
+    <nav role="navigation" aria-label="Primary Navigation">
+      <a href="/dashboard/index.html" data-i18n="nav.home">Home</a>
+      <a href="/dashboard/menu.html" data-i18n="nav.menu">Menu</a>
+      <a href="/dashboard/locations.html" data-i18n="nav.locations">Locations</a>
+      <a href="/dashboard/about.html" data-i18n="nav.about">About</a>
+      <a href="/dashboard/contact.html" data-i18n="nav.contact">Contact</a>
+      <a href="/dashboard/cart.html" data-i18n="nav.cart">Cart</a>
+      <a href="/dashboard/login.html" id="login-account-link" data-i18n="nav.login">Login</a>
+    </nav>
+    <div class="lang-toggle" role="group" aria-label="Language toggle">
+      <span id="lang-id" tabindex="0" class="active">ID</span> | <span id="lang-en" tabindex="0">EN</span>
+    </div>
+    <div class="burger" aria-label="Toggle menu" role="button" tabindex="0">
+      <span></span><span></span><span></span>
+    </div>
+  </header>
+  <nav class="nav-mobile" aria-label="Mobile Navigation"></nav>
+  <main>
+    <h1 data-i18n="locations.title">Our Locations</h1>
+    <ul class="location-list" aria-label="List of Crispy Crown Fried Chicken locations">
+      <li data-i18n="locations.loc1">Jl. Merdeka No. 10, Jakarta</li>
+      <li data-i18n="locations.loc2">Jl. Sudirman No. 45, Bandung</li>
+      <li data-i18n="locations.loc3">Jl. Malioboro No. 88, Yogyakarta</li>
+      <li data-i18n="locations.loc4">Jl. Diponegoro No. 22, Surabaya</li>
+      <li data-i18n="locations.loc5">Jl. Gatot Subroto No. 5, Medan</li>
+    </ul>
+  </main>
+  <footer>
+    &copy; 2024 Crispy Crown Fried Chicken
+  </footer>
+  <script>
+    const translations = {
+      en: {
+        title: "Locations - Crispy Crown Fried Chicken",
+        nav: { home: "Home", menu: "Menu", locations: "Locations", about: "About", contact: "Contact", cart: "Cart", login: "Login", account: "Account" },
+        locations: {
+          title: "Our Locations",
+          loc1: "10 Merdeka St, Jakarta",
+          loc2: "45 Sudirman St, Bandung",
+          loc3: "88 Malioboro St, Yogyakarta",
+          loc4: "22 Diponegoro St, Surabaya",
+          loc5: "5 Gatot Subroto St, Medan"
+        }
+      },
+      id: {
+        title: "Lokasi - Crispy Crown Fried Chicken",
+        nav: { home: "Beranda", menu: "Menu", locations: "Lokasi", about: "Tentang", contact: "Kontak", cart: "Keranjang", login: "Masuk", account: "Akun" },
+        locations: {
+          title: "Lokasi Kami",
+          loc1: "Jl. Merdeka No. 10, Jakarta",
+          loc2: "Jl. Sudirman No. 45, Bandung",
+          loc3: "Jl. Malioboro No. 88, Yogyakarta",
+          loc4: "Jl. Diponegoro No. 22, Surabaya",
+          loc5: "Jl. Gatot Subroto No. 5, Medan"
+        }
+      }
+    };
+
+    const langIdBtn = document.getElementById('lang-id');
+    const langEnBtn = document.getElementById('lang-en');
+    let currentLang = 'id';
+
+    function setLang(lang) {
+      if (!translations[lang]) return;
+      currentLang = lang;
+      localStorage.lang = lang;
+      langIdBtn.classList.toggle('active', lang === 'id');
+      langEnBtn.classList.toggle('active', lang === 'en');
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const keys = key.split('.');
+        let text = translations[lang];
+        for (const k of keys) {
+          if (text && k in text) text = text[k];
+          else { text = null; break; }
+        }
+        if (text !== null && text !== undefined) {
+          if (el.tagName.toLowerCase() === 'input' || el.tagName.toLowerCase() === 'textarea') {
+            el.placeholder = text;
+          } else {
+            el.textContent = text;
+          }
+        }
+      });
+      updateLoginAccountLink();
+    }
+
+    (function detectLang() {
+      const stored = localStorage.lang;
+      if (stored && (stored === 'id' || stored === 'en')) {
+        setLang(stored);
+      } else {
+        const navLang = navigator.language || navigator.userLanguage || '';
+        setLang(navLang.toLowerCase().includes('id') ? 'id' : 'en');
+      }
+    })();
+
+    langIdBtn.addEventListener('click', () => setLang('id'));
+    langEnBtn.addEventListener('click', () => setLang('en'));
+    langIdBtn.addEventListener('keydown', e => { if(e.key==='Enter' || e.key===' ') { e.preventDefault(); setLang('id'); } });
+    langEnBtn.addEventListener('keydown', e => { if(e.key==='Enter' || e.key===' ') { e.preventDefault(); setLang('en'); } });
+
+    // Burger menu for mobile
+    const burger = document.querySelector('.burger');
+    const navMobile = document.querySelector('.nav-mobile');
+    burger.addEventListener('click', () => navMobile.classList.toggle('show'));
+    burger.addEventListener('keydown', e => { if(e.key==='Enter' || e.key===' ') { e.preventDefault(); navMobile.classList.toggle('show'); } });
+
+    // Populate mobile nav links
+    function populateMobileNav() {
+      const navLinks = document.querySelectorAll('nav a');
+      navMobile.innerHTML = '';
+      navLinks.forEach(link => {
+        const clone = link.cloneNode(true);
+        clone.addEventListener('click', () => navMobile.classList.remove('show'));
+        navMobile.appendChild(clone);
+      });
+    }
+    populateMobileNav();
+
+    // Update login/account link text based on session
+    async function updateLoginAccountLink() {
+      const link = document.getElementById('login-account-link');
+      try {
+        const res = await fetch('/api/me');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.ok && data.user) {
+            link.textContent = translations[currentLang].nav.account;
+            link.href = '/dashboard/account.html';
+          } else {
+            link.textContent = translations[currentLang].nav.login;
+            link.href = '/dashboard/login.html';
+          }
+        } else {
+          link.textContent = translations[currentLang].nav.login;
+          link.href = '/dashboard/login.html';
+        }
+      } catch {
+        link.textContent = translations[currentLang].nav.login;
+        link.href = '/dashboard/login.html';
+      }
+    }
+    updateLoginAccountLink();
+  </script>
+</body>
+</html>
