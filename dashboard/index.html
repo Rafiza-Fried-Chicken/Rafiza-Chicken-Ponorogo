@@ -122,12 +122,14 @@
       margin-bottom: 0.5rem;
       font-weight: 700;
       text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      user-select:none;
     }
     .hero-content p {
       font-size: 1.2rem;
       margin-bottom: 1.5rem;
       font-weight: 500;
       text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+      user-select:none;
     }
     .btn-primary {
       background: #D12D2D;
@@ -151,6 +153,7 @@
       gap: 2rem;
       justify-content: center;
       flex-wrap: wrap;
+      user-select:none;
     }
     .usp-card {
       background: #fff;
@@ -163,7 +166,6 @@
       color: #444;
       font-weight: 600;
       font-size: 1rem;
-      user-select:none;
     }
     footer {
       font-size: 0.9rem;
@@ -172,6 +174,7 @@
       padding: 1rem;
       background: #fff;
       box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
+      user-select:none;
     }
     /* Responsive */
     @media (max-width: 600px) {
@@ -249,4 +252,159 @@
       <a href="/dashboard/index.html" data-i18n="nav.home">Home</a>
       <a href="/dashboard/menu.html" data-i18n="nav.menu">Menu</a>
       <a href="/dashboard/locations.html" data-i18n="nav.locations">Locations</a>
-      <a href
+      <a href="/dashboard/about.html" data-i18n="nav.about">About</a>
+      <a href="/dashboard/contact.html" data-i18n="nav.contact">Contact</a>
+      <a href="/dashboard/cart.html" data-i18n="nav.cart">Cart</a>
+      <a href="/dashboard/login.html" id="login-account-link" data-i18n="nav.login">Login</a>
+    </nav>
+    <div class="lang-toggle" role="group" aria-label="Language toggle">
+      <span id="lang-id" tabindex="0" class="active">ID</span> | <span id="lang-en" tabindex="0">EN</span>
+    </div>
+    <div class="burger" aria-label="Toggle menu" role="button" tabindex="0">
+      <span></span><span></span><span></span>
+    </div>
+  </header>
+  <nav class="nav-mobile" aria-label="Mobile Navigation"></nav>
+  <main>
+    <section class="hero" role="banner" aria-label="Hero section with fried chicken image and call to action">
+      <div class="hero-content">
+        <h1 data-i18n="hero.title">Welcome to Crispy Crown Fried Chicken</h1>
+        <p data-i18n="hero.subtitle">Experience the taste of premium, crispy fried chicken made fresh daily.</p>
+        <button class="btn-primary" id="order-now-btn" data-i18n="hero.orderNow">Order Now</button>
+      </div>
+    </section>
+    <section class="usp" aria-label="Unique selling points">
+      <div class="usp-card" data-i18n="usp.fresh">Fresh Ingredients</div>
+      <div class="usp-card" data-i18n="usp.secretRecipe">Secret Recipe</div>
+      <div class="usp-card" data-i18n="usp.fastDelivery">Fast Delivery</div>
+    </section>
+  </main>
+  <footer>
+    &copy; 2024 Crispy Crown Fried Chicken
+  </footer>
+  <script>
+    const translations = {
+      en: {
+        title: "Crispy Crown Fried Chicken - Home",
+        nav: { home: "Home", menu: "Menu", locations: "Locations", about: "About", contact: "Contact", cart: "Cart", login: "Login", account: "Account" },
+        hero: {
+          title: "Welcome to Crispy Crown Fried Chicken",
+          subtitle: "Experience the taste of premium, crispy fried chicken made fresh daily.",
+          orderNow: "Order Now"
+        },
+        usp: {
+          fresh: "Fresh Ingredients",
+          secretRecipe: "Secret Recipe",
+          fastDelivery: "Fast Delivery"
+        }
+      },
+      id: {
+        title: "Crispy Crown Fried Chicken - Beranda",
+        nav: { home: "Beranda", menu: "Menu", locations: "Lokasi", about: "Tentang", contact: "Kontak", cart: "Keranjang", login: "Masuk", account: "Akun" },
+        hero: {
+          title: "Selamat Datang di Crispy Crown Fried Chicken",
+          subtitle: "Rasakan cita rasa ayam goreng premium yang renyah dan segar setiap hari.",
+          orderNow: "Pesan Sekarang"
+        },
+        usp: {
+          fresh: "Bahan Segar",
+          secretRecipe: "Resep Rahasia",
+          fastDelivery: "Pengiriman Cepat"
+        }
+      }
+    };
+
+    const langIdBtn = document.getElementById('lang-id');
+    const langEnBtn = document.getElementById('lang-en');
+    let currentLang = 'id';
+
+    function setLang(lang) {
+      if (!translations[lang]) return;
+      currentLang = lang;
+      localStorage.lang = lang;
+      langIdBtn.classList.toggle('active', lang === 'id');
+      langEnBtn.classList.toggle('active', lang === 'en');
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const keys = key.split('.');
+        let text = translations[lang];
+        for (const k of keys) {
+          if (text && k in text) text = text[k];
+          else { text = null; break; }
+        }
+        if (text !== null && text !== undefined) {
+          if (el.tagName.toLowerCase() === 'input' || el.tagName.toLowerCase() === 'textarea') {
+            el.placeholder = text;
+          } else {
+            el.textContent = text;
+          }
+        }
+      });
+      updateLoginAccountLink();
+    }
+
+    (function detectLang() {
+      const stored = localStorage.lang;
+      if (stored && (stored === 'id' || stored === 'en')) {
+        setLang(stored);
+      } else {
+        const navLang = navigator.language || navigator.userLanguage || '';
+        setLang(navLang.toLowerCase().includes('id') ? 'id' : 'en');
+      }
+    })();
+
+    langIdBtn.addEventListener('click', () => setLang('id'));
+    langEnBtn.addEventListener('click', () => setLang('en'));
+    langIdBtn.addEventListener('keydown', e => { if(e.key==='Enter' || e.key===' ') { e.preventDefault(); setLang('id'); } });
+    langEnBtn.addEventListener('keydown', e => { if(e.key==='Enter' || e.key===' ') { e.preventDefault(); setLang('en'); } });
+
+    // Burger menu for mobile
+    const burger = document.querySelector('.burger');
+    const navMobile = document.querySelector('.nav-mobile');
+    burger.addEventListener('click', () => navMobile.classList.toggle('show'));
+    burger.addEventListener('keydown', e => { if(e.key==='Enter' || e.key===' ') { e.preventDefault(); navMobile.classList.toggle('show'); } });
+
+    // Populate mobile nav links
+    function populateMobileNav() {
+      const navLinks = document.querySelectorAll('nav a');
+      navMobile.innerHTML = '';
+      navLinks.forEach(link => {
+        const clone = link.cloneNode(true);
+        clone.addEventListener('click', () => navMobile.classList.remove('show'));
+        navMobile.appendChild(clone);
+      });
+    }
+    populateMobileNav();
+
+    // Update login/account link text based on session
+    async function updateLoginAccountLink() {
+      const link = document.getElementById('login-account-link');
+      try {
+        const res = await fetch('/api/me');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.ok && data.user) {
+            link.textContent = translations[currentLang].nav.account;
+            link.href = '/dashboard/account.html';
+          } else {
+            link.textContent = translations[currentLang].nav.login;
+            link.href = '/dashboard/login.html';
+          }
+        } else {
+          link.textContent = translations[currentLang].nav.login;
+          link.href = '/dashboard/login.html';
+        }
+      } catch {
+        link.textContent = translations[currentLang].nav.login;
+        link.href = '/dashboard/login.html';
+      }
+    }
+    updateLoginAccountLink();
+
+    // Order Now button click
+    document.getElementById('order-now-btn').addEventListener('click', () => {
+      window.location.href = '/dashboard/menu.html';
+    });
+  </script>
+</body>
+</html>
